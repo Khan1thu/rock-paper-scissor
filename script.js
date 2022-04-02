@@ -1,3 +1,5 @@
+const buttons = document.querySelectorAll(".button");
+const div = document.querySelector(".result");
 const games = ['rock', 'paper' , 'scissor'];
 let playerScore = 0;
 let computerScore = 0;
@@ -14,64 +16,91 @@ function playRound(playerSelection, computerSelection){
 
     //player rock
     if(playerSelection === 'rock' && computerSelection === 'paper'){
-        console.log("You Lose! Paper beat Rock");
         computerScore++;
-        console.log("Computer score is now " + computerScore);
+        div.innerHTML = `   
+                            <h3> Player is ${playerSelection} </h3>
+                            <h3> Computer is ${computerSelection} </h3>
+                            <h3> You Lose! Paper beat Rock </h3>
+                            <h3> Computer score is now ${computerScore} </h3>`;
+
     }else if(playerSelection === 'rock' && computerSelection === 'scissor'){
-        console.log("You Win! Rock beat Scissor");
         playerScore++;
-        console.log("Player score is now " + playerScore);
+        div.innerHTML = `
+                            <h3> Player is ${playerSelection} </h3>
+                            <h3> Computer is ${computerSelection} </h3>
+                            <h3> You Win! Rock beat Scissor </h3>
+                            <h3> Player score is now ${playerScore} </h3>`;
+
     }else if(playerSelection === 'rock' && computerSelection === 'rock'){
-        console.log("Tie");
-        console.log("No one get score");
+        div.innerHTML = `
+                        <h3> Player is ${playerSelection} </h3>
+                        <h3> Computer is ${computerSelection} </h3>
+                        <h3> Tie </h3>
+                        <h3> No one get score </h3>`;
 
     //Player Paper
     }else if(playerSelection === 'paper' && computerSelection === 'paper'){
-        console.log("Tie");
-        console.log("No one get score");
+        div.innerHTML = `
+                            <h3> Player is ${playerSelection} </h3>
+                            <h3> Computer is ${computerSelection} </h3>
+                            <h3> Tie </h3> 
+                            <h3> No one get score </h3>`;
+
     }else if(playerSelection === 'paper' && computerSelection === 'rock'){
-        console.log("You Won! Paper beat Rock");
         playerScore++;
-        console.log("Player score is now " + playerScore);
+        div.innerHTML = `
+                            <h3> Player is ${playerSelection} </h3>
+                            <h3> Computer is ${computerSelection} </h3>
+                            <h3> You Won! Paper beat Rock </h3> 
+                            <h3> Player score is now ${playerScore} </h3>`;
+
     }else if(playerSelection === 'paper' && computerSelection === 'scissor'){
-        console.log("You Lose! Scissor beat Paper");
         computerScore++;
-        console.log("Computer score is now " + computerScore);
+        div.innerHTML = `
+                            <h3> Player is ${playerSelection} </h3>
+                            <h3> Computer is ${computerSelection} </h3>
+                            <h3> You Lose! Scissor beat Paper </h3> 
+                            <h3> Computer score is now ${computerScore}`;
 
     //Player Scissor
     }else if(playerSelection === 'scissor' && computerSelection === 'scissor'){
-        console.log("Tie");
-        console.log("No one get score");
+        div.innerHTML = `
+                            <h3> Player is ${playerSelection} </h3>
+                            <h3> Computer is ${computerSelection} </h3>
+                            <h3> Tie </h3> 
+                            <h3> No one get score </h3>`;
+
     }else if(playerSelection === 'scissor' && computerSelection === 'rock'){
-        console.log("You Lose! Rock beat Scissor");
         computerScore++;
-        console.log("Computer score is now " + computerScore);
+        div.innerHTML = `
+                            <h3> Player is ${playerSelection} </h3>
+                            <h3> Computer is ${computerSelection} </h3>
+                            <h3> You Lose! Rock beat Scissor </h3> 
+                            <h3> Computer score is now ${computerScore}`;
+
     }else if(playerSelection === 'scissor' && computerSelection === 'paper'){
-        console.log("You Win! Scissor beat Paper");
         playerScore++;
-        console.log("Player score is now " + playerScore);
-    }else{
-        console.log("Please type correctly");
+        div.innerHTML = `
+                            <h3> Player is ${playerSelection} </h3>
+                            <h3> Computer is ${computerSelection} </h3>
+                            <h3> You Win! Scissor beat Paper </h3> 
+                            <h3> Player score is now ${playerScore}`;
+
     }
 }
 
-//game function
-function game(){
-   for(i = 0; i < 5 ; i++){
-    const playerSelection = prompt("Please Enter Rock or Paper or Scissor").toLowerCase();
-    console.log("Player is: " + playerSelection);
-    const computerSelection = computerPlay();
-    console.log("Computer is: " + computerSelection);
-    playRound(playerSelection, computerSelection);
-   }
-
-   if(playerScore == computerScore){
-       console.log("Tie");
-   }else if(playerScore > computerScore){
-       console.log("Player won! Player score is " + playerScore);
-   }else if(playerScore < computerScore){
-       console.log("Computer won! Computer score is " + computerScore);
-   }
-}
-
-game();
+buttons.forEach(btn => {
+    btn.addEventListener("click", (e)=>{
+      const computer = computerPlay();
+      
+      if(playerScore > 4){
+          div.innerHTML = `<h1> Player Won! reload to play it again</h1>`;
+          return;
+      }else if( computerScore > 4){
+          div.innerHTML = `<h1> Computer Won! reload to play it again </h1>`;
+          return;
+      }else{
+        playRound(e.target.value, computer);
+      }
+    });
+})
